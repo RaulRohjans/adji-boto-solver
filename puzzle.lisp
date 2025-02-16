@@ -162,7 +162,9 @@
     ((and (= i 1) (>= j size)) (distribute-pieces 0 (1- size) tab n #'1-))
     ((and (= i 0) (< j 0)) (distribute-pieces 1 0 tab n #'1+))
     ((and (= i 0) (eq op #'1+)) (distribute-pieces i j tab n #'1-))
-    (t (distribute-pieces i (funcall op j) (replace-cell i j tab) (1- n)))))
+    (t (distribute-pieces i (funcall op j) (replace-cell i j tab) (1- n)))
+  )
+)
 
 (defun gen-sucessors (node &aux (entry (node-entry node)))
   "Generates the successors of a given node"
