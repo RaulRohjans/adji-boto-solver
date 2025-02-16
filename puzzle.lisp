@@ -94,6 +94,9 @@
 
 
 ;; ************************* Other Functions *************************
+(defun existsp (node closed-nodes) 
+  (some (lambda (closed-node) (equal (node-entry node) (node-entry closed-node))) closed-nodes)
+)
 
 (defun expand-node (node &optional (operators nil))
   "Expands a node generating its successors"
