@@ -7,7 +7,7 @@
 ;; ************************* Helper Functions *************************
 (defun get-project-path ()
   "Gets the project path"
-  "/home/raul/Documents/IA/Projeto 1"
+  "/home/raul/Documents/GitHub/adji-boto-solver"
 )
 
 (defun read-game-entries ()
@@ -25,17 +25,17 @@
 
 (defun select-entry ()
   "Allows the user to select a game entry."
-  (let ((problemas (read-game-entries))) ;; Read entries first
-    (show-available-entries) ;; Display all available entries
-    
-    (format t "~%Choose an entry (1-%D): " (length problemas))
-    (let ((choice (read)) (entries (read-game-entries)))
+  (let ((entries (read-game-entries))) ;; Read entries first
+    (show-available-entries) ;; Display all available entries    
+
+    (format t "~%Choose an entry: ")
+    (let ((choice (read)))
       (cond
         ((and (integerp choice) (>= choice 1) (<= choice (length entries)))
          (get-game-entry (1- choice) entries))
 
         (t
-         (format t "Invalid input. Please enter a number between 1 and %D.~%" (length problemas))
+         (format t "Invalid input. Please enter a number between 1 and %D.~%" (length entries))
          (select-entry))
       )
     )
@@ -74,8 +74,8 @@
   "Starts the program by importing other files and loading main menu"
 
   ;; File imports
-  (load (concatenate 'string (get-project-path) "procura.lisp")
-  (load (concatenate 'string (get-project-path) "puzzle.lisp"))
+  (load (concatenate 'string (get-project-path) "/procura.lisp"))
+  (load (concatenate 'string (get-project-path) "/puzzle.lisp"))
 
   ;; Load entries
   (main-menu)
@@ -105,9 +105,6 @@
   (format t "~%1. BFS")
   (format t "~%2. DFS")
   (format t "~%3. A*")
-  (format t "~%4. SMA*")
-  (format t "~%5. IDA*")
-  (format t "~%6. RBFS")
   (format t "~%0. Exit")
   (format t "~%Select an option: ")
   (let ((choice (read)))
@@ -115,9 +112,6 @@
       (1 (start-bfs))
       (2 (start-dfs))
       (3 (start-a))
-;      (4 (start-sma))
-;      (5 (start-ida))
-;      (6 (start-rbfs))
       (0 (format t "Exiting...~%"))
       (t (format t "Invalid option. Try again.~%") (menu))))
 )
