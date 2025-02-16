@@ -155,14 +155,14 @@
   )
 )
 
-(defun distribute-pieces (i j tab &optional (n (1+ (entry-cell i j tab))) (op #'1+) (size (length (car tab))))
+(defun distribute-pieces (i j entry &optional (n (1+ (entry-cell i j entry))) (op #'1+) (size (length (car entry))))
   "Spreads the pieces throughout the entry"
   (cond
-    ((= n 0) (if (eq i 0) (validate-rule-aux i (1+ j) tab) (validate-rule-aux i (1- j) tab)))
-    ((and (= i 1) (>= j size)) (distribute-pieces 0 (1- size) tab n #'1-))
-    ((and (= i 0) (< j 0)) (distribute-pieces 1 0 tab n #'1+))
-    ((and (= i 0) (eq op #'1+)) (distribute-pieces i j tab n #'1-))
-    (t (distribute-pieces i (funcall op j) (replace-cell i j tab) (1- n)))
+    ((= n 0) (if (eq i 0) (validate-rule-aux i (1+ j) entry) (validate-rule-aux i (1- j) entry)))
+    ((and (= i 1) (>= j size)) (distribute-pieces 0 (1- size) entry n #'1-))
+    ((and (= i 0) (< j 0)) (distribute-pieces 1 0 entry n #'1+))
+    ((and (= i 0) (eq op #'1+)) (distribute-pieces i j entry n #'1-))
+    (t (distribute-pieces i (funcall op j) (replace-cell i j entry) (1- n)))
   )
 )
 
