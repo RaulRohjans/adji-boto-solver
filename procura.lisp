@@ -27,13 +27,14 @@
 ;; ************************* DFS *************************
 
 (defun dfs (node max-depth &optional (open-nodes (list node)) (closed-nodes nil))
-  (cond
-    ((node-solution node) node)
-    ((>= (node-depth node) max-depth) nil)
-    ((null open-nodes) nil)
-    (t (let* ((sucessores (remove-if #'(lambda (suc) (existsp suc closed-nodes))
-                                     (expand-node (car open-nodes))))
+  (cond ((node-solution node) node)
+        ((>= (node-depth node) max-depth) nil)
+        ((null open-nodes) nil)
+        (t (let* ((current-node (car open-nodes))
+              (sucessores (remove-if #'(lambda (suc) (existsp suc closed-nodes))
+                                     (expand-node current-node)))
               (new-open-nodes (append sucessores (cdr open-nodes))))
-         (dfs (car new-open-nodes) max-depth new-open-nodes (cons (car open-nodes) closed-nodes))))
+          (dfs (car new-open-nodes) max-depth new-open-nodes (cons current-node closed-nodes))))
   )
 )
+
