@@ -66,15 +66,6 @@
 (defun node-removed-pieces (node) (nth 3 node))
 (defun node-heuristic (node) (nth 4 node))
 
-(defun show-execution-path (node &optional (isRecursive nil))
-  "Shows the executed path until the give node."
-  (cond ((and (null node) (null isRecursive)) (format t "There is no path to show."))
-        ((null node) Nil)
-        (t (print (list (node-entry node) (node-depth node) (node-removed-pieces node) (node-heuristic node)))
-        (show-execution-path (node-parent node) T))
-  )
-)
-
 (defun node-solution (node)
   "Checks if the entry of a node is empty"
   (empty-entry (node-entry node))
