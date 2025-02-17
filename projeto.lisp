@@ -144,7 +144,7 @@
   (let ((entry (select-entry)))
     (let ((heu (select-heuristic)))
       (format t "~%Starting A*...~%")
-      (let ((res (a-star (create-node entry :heuristic (funcall heu (list entry 0))) heu)))
+      (let ((res (a-star (create-node entry nil 0 0 (funcall heu (list entry 0))) heu)))
         (cond (res (show-execution-path res))
               (T (format t "No solution found."))
         )
