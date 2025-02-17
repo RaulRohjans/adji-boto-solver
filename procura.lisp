@@ -11,6 +11,18 @@
   )
 )
 
+(defun custom-heuristic (node)
+  "Measures how spread out the pieces are, to estimate difficulty.
+  This favors boards where pieces are concentrated in fewer columns because 
+  spreading them out means more moves."
+  (let* ((entry (node-entry node))
+         (upper-row (remove 0 (car entry)))
+         (lower-row (remove 0 (cadr entry)))
+         (spread (+ (length upper-row) (length lower-row))))
+    spread)
+)
+
+
 ;; ************************* BFS *************************
 
 (defun bfs (node &optional (open-nodes (list node)) (closed-nodes nil))

@@ -61,7 +61,7 @@
   (let ((choice (read)))
     (case choice
       (1 #'default-heuristic)
-      (2 'default)
+      (2 #'custom-heuristic)
       (t (format t "Invalid option.~%") (select-heuristic))
     )
   )
