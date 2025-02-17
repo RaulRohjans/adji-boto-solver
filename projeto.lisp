@@ -183,7 +183,12 @@
                 (format t "There is no path to show.")
                 (setf output "There is no path to show."))
               (collect-path node))
-          (write-sequence output file))))))
+          (write-sequence output file)
+        )
+      )
+    )
+  )
+)
 
 
 
