@@ -169,19 +169,23 @@
   )
 )
 
-(defun gen-sucessors (node &aux (entry (node-entry node)))
-  "Generates the successors of a given node"
-  (mapcar #'(lambda (nEntry) (if (null nEntry) nil
-                          (create-node (first nEntry)
-                           node
-                           (1+ (node-depth node))
-                           (+ (node-removed-pieces node) (second nEntry))
-                           (default-heuristic (list (first nEntry) (+ (node-removed-pieces node) (second nEntry)))))))
-          (mapcar #'(lambda (pos) 
-                      (replace-aux (car pos) (cadr pos) (distribute-pieces (car pos) (cadr pos) entry)))
-                  (rows-w-pieces entry))
+(defun gen-sucessors (node &optional (heuristic #'default-heuristic))
+  "Generates the successors of a given node using the selected heuristic"
+  (let ((entry (node-entry node)))
+    (mapcar #'(lambda (nEntry) 
+                (if (null nEntry) nil
+                  (create-node (first nEntry)
+                               node
+                               (1+ (node-depth node))
+                               (+ (node-removed-pieces node) (second nEntry))
+                               (funcall heuristic (list (first nEntry) (+ (node-removed-pieces node) (second nEntry))))))) ;; Apply heu dynamically
+            (mapcar #'(lambda (pos) 
+                        (replace-aux (car pos) (cadr pos) (distribute-pieces (car pos) (cadr pos) entry)))
+                    (rows-w-pieces entry))
+    )
   )
 )
+
 
 
 (defun rows-w-pieces (entry &optional (i 0))
