@@ -38,3 +38,36 @@
   )
 )
 
+
+;; A*
+
+(defun a-star (node &optional (open-nodes (list node)) (closed-nodes nil))
+  (cond ((node-solution node) node)
+        ((null open-nodes) nil)
+        (t (a-star (car open-nodes) (open-nodes-a (cdr open-nodes) 
+                          (apply #'append 
+                              (mapcar  #'(lambda (suc) (if (or (null open-nodes) (existsp suc closed-nodes)) '() (list suc))) 
+                                (gen-sucessors (car open-nodes))  
+                              )
+                          )) (cons  (car open-nodes) closed-nodes)
+        ))
+  )
+)
+
+(defun open-nodes-a (open-nodes sucessors)
+  "Returns a sorted list with the open nodes"
+  (quicksort (append sucessors open-nodes))
+)
+
+(defun quicksort (no)
+  (cond ((null no) nil)
+    (t (let* ((x (car no))
+        (r (cdr no))
+        (fn (lambda (a) (< (node-heuristic a) (node-heuristic x)))))
+        (append (quicksort (remove-if-not fn r))
+          (list x)
+          (quicksort (remove-if fn r)))
+      )
+    ) 
+  )
+)
